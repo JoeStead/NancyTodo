@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/app/source /usr/src/app/build
 WORKDIR /usr/src/app/source
 
 COPY . /usr/src/app/source
-RUN nuget restore -NonInteractive
+RUN nuget restore -NonInteractive TodoApi.sln
 RUN xbuild /property:Configuration=Release /property:OutDir=/usr/src/app/build/
 WORKDIR /usr/src/app/build
 

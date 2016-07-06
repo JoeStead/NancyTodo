@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace TodoApi.Todo
 {
@@ -10,6 +11,15 @@ namespace TodoApi.Todo
             Completed = completed;
         }
 
+        [JsonConstructor]
+        public Todo(int id, string details, bool completed)
+        {
+            Id = id;
+            Details = details;
+            Completed = completed;
+        }
+
+        public int Id { get; set; }
         public string Details { get; }
         public bool Completed { get; }
     }
