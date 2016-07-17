@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using FluentValidation.Results;
+using FluentValidation.TestHelper;
 using TodoApi.Todo;
 using Xunit;
 
@@ -15,23 +16,12 @@ namespace TodoApi.Tests.TodoFeature
             _subject = new TodoCreateValidator();
         }
 
-        [Fact]
-        public void ShouldHaveValidationFailuresWhenDetailsIsEmpty()
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void ShouldHaveValidationFailuresWhenDetailsIsEmpty(string value)
         {
-            var result = _subject.Validate(new CreateTodo
-            {
-                Details = string.Empty
-            });
-            result.IsValid.Should().BeFalse();
-            result.Errors.First().Should().Match<ValidationFailure>(e => e.PropertyName == nameof(CreateTodo.Details));
-        }
-
-        [Fact]
-        public void ShouldHaveValidationFailuresWhenDetailsIsNull()
-        {
-            var result = _subject.Validate(new CreateTodo());
-            result.IsValid.Should().BeFalse();
-            result.Errors.First().Should().Match<ValidationFailure>(e => e.PropertyName == nameof(CreateTodo.Details));
+            _subject.ShouldHaveValidationErrorFor(f => f.Details, value);
         }
 
         [Fact]
